@@ -42,8 +42,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	protected void configure(final HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 			.antMatchers("/static/**").permitAll()
-			.antMatchers(HttpMethod.GET, "/product").hasRole(Roles.ADMIN_ROLE)
-			.antMatchers(HttpMethod.POST, "/product").hasAuthority(Roles.ADMIN_ROLE)
+			.antMatchers(HttpMethod.GET, "/product").hasRole(Roles.USER_ROLE)
+			.antMatchers(HttpMethod.POST, "/product").hasAuthority(Roles.USER_ROLE)
 			.anyRequest().fullyAuthenticated();
 
 		// registering the post auth handlers

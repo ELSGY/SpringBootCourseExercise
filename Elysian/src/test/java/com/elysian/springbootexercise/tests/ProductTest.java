@@ -26,14 +26,10 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
-public class ProductTests {
+public class ProductTest {
 
 	@Mock
 	private ProductRepository productRepository; // the collaborator (productRepository) is mocked
-
-	@Spy
-	@SuppressWarnings("unused")
-	private ExecutorService executorService;
 
 	// the tested service; also called 'system under test' // SUT
 	@InjectMocks
@@ -44,8 +40,8 @@ public class ProductTests {
 	void givenThereAreAvailableProducts_whenRetrievingProducts_thenProductsAreRetrievedCorrectly() {
 		// arrange, including mocking behavior setup    --> given
 		final List<Product> products = Arrays.asList(
-				new Product("Samsung S8"),
-				new Product("Google Pixel")
+				new Product("Manusa1"),
+				new Product("Bocanci2")
 		);
 		when(productRepository.getAllProducts()).thenReturn(products);
 

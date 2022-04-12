@@ -26,6 +26,10 @@ public class Section extends AbstractEntity {
 
 	}
 
+	public Section(String name) {
+		this.name = name;
+	}
+
 	public Section(final int id, final String name) {
 		this.id = id;
 		this.name = name;
