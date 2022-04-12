@@ -1,6 +1,8 @@
 package com.elysian.springbootexercise.controller;
 
 import com.elysian.springbootexercise.service.StoreService;
+import com.elysian.springbootexercise.utils.annotations.HasAdminRole;
+import com.elysian.springbootexercise.utils.annotations.HasUserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,11 +20,14 @@ public class StoreController {
 		this.storeService = storeService;
 	}
 
+	@HasUserRole
+	@HasAdminRole
 	@GetMapping("/getAllStores")
 	public String getAllProducts() {
 		return storeService.getAllStores().toString();
 	}
 
+	@HasAdminRole
 	@GetMapping("/{sectiondId}/{storeId}")
 	public String addSectionToStore(@PathVariable int sectiondId, @PathVariable int storeId) {
 		if (storeService.addSectionToStore(sectiondId, storeId))

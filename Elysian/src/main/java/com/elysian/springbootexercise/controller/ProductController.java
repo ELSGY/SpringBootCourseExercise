@@ -3,6 +3,8 @@ package com.elysian.springbootexercise.controller;
 import com.elysian.springbootexercise.model.Product;
 import com.elysian.springbootexercise.security.Roles;
 import com.elysian.springbootexercise.service.ProductService;
+import com.elysian.springbootexercise.utils.annotations.HasAdminRole;
+import com.elysian.springbootexercise.utils.annotations.HasUserRole;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,12 +24,14 @@ public class ProductController {
 		this.productService = productService;
 	}
 
-	@Secured(Roles.USER_ROLE)
+	@HasUserRole
+	@HasAdminRole
 	@GetMapping("/getAllProducts")
 	public String getAllProducts() {
 		return productService.getAllProducts().toString();
 	}
 
+	@HasAdminRole
 	@DeleteMapping("/{product}")
 	public String deleteProduct(@PathVariable Product product) {
 		if (productService.deleteProduct(product))
@@ -35,6 +39,7 @@ public class ProductController {
 		return "Product couldn't be deleted!";
 	}
 
+	@HasAdminRole
 	@PostMapping
 	public String addProduct(@RequestBody Product product) {
 		if (productService.addProduct(product))
@@ -42,6 +47,8 @@ public class ProductController {
 		return "Product couldn't be added";
 	}
 
+	@HasUserRole
+	@HasAdminRole
 	@GetMapping("/{id}")
 	public String getAllProducts(@PathVariable int id) {
 		return productService.getProductById(id).toString();

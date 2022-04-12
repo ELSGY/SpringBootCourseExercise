@@ -29,21 +29,27 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	public void configureGlobal(final AuthenticationManagerBuilder auth) throws Exception {
 		auth.inMemoryAuthentication()
 			.withUser("user")
-			.authorities(Roles.USER_ROLE)
-			.roles(Roles.USER_ROLE)
 			.password("$2a$10$4xnpk2a5jLr1mf6VWle6Vuv4q7DBsW2rqQcg6N1Ms/y4g98Ry4D4C")
+			.roles(Roles.USER_ROLE)
 			.and()
 			.withUser("admin")
-			.authorities(Roles.ADMIN_ROLE)
-			.password("$2a$10$4xnpk2a5jLr1mf6VWle6Vuv4q7DBsW2rqQcg6N1Ms/y4g98Ry4D4C");
+			.password("$2a$10$4xnpk2a5jLr1mf6VWle6Vuv4q7DBsW2rqQcg6N1Ms/y4g98Ry4D4C")
+			.roles(Roles.ADMIN_ROLE);
 	}
 
 	@Override
 	protected void configure(final HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 			.antMatchers("/static/**").permitAll()
-			.antMatchers(HttpMethod.GET, "/product").hasRole(Roles.USER_ROLE)
-			.antMatchers(HttpMethod.POST, "/product").hasAuthority(Roles.USER_ROLE)
+			.antMatchers(HttpMethod.GET, "/product").hasAnyRole(Roles.USER_ROLE, Roles.ADMIN_ROLE)
+			.antMatchers(HttpMethod.POST, "/product").hasRole(Roles.ADMIN_ROLE)
+			.antMatchers(HttpMethod.DELETE, "/product").hasRole(Roles.ADMIN_ROLE)
+
+			.antMatchers(HttpMethod.GET, "/section").hasAnyRole(Roles.USER_ROLE, Roles.ADMIN_ROLE)
+			.antMatchers(HttpMethod.POST, "/section").hasRole(Roles.ADMIN_ROLE)
+			.antMatchers(HttpMethod.DELETE, "/section").hasRole(Roles.ADMIN_ROLE)
+
+			.antMatchers(HttpMethod.GET, "/store").hasAnyRole(Roles.USER_ROLE, Roles.ADMIN_ROLE)
 			.anyRequest().fullyAuthenticated();
 
 		// registering the post auth handlers
@@ -93,7 +99,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	private void configureSessionManagement(HttpSecurity http) throws Exception {
 		final SessionManagementConfigurer<HttpSecurity> sessionManagement = http.sessionManagement();
-		sessionManagement.maximumSessions(3);
+		sessionManagement.maximumSessions(10);
 		sessionManagement.invalidSessionStrategy(new SimpleRedirectInvalidSessionStrategy("/login"));
 		sessionManagement.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED);
 	}

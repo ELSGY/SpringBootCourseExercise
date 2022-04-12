@@ -2,6 +2,8 @@ package com.elysian.springbootexercise.controller;
 
 import com.elysian.springbootexercise.model.Section;
 import com.elysian.springbootexercise.service.SectionService;
+import com.elysian.springbootexercise.utils.annotations.HasAdminRole;
+import com.elysian.springbootexercise.utils.annotations.HasUserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,11 +23,14 @@ public class SectionController {
 		this.sectionService = sectionService;
 	}
 
+	@HasUserRole
+	@HasAdminRole
 	@GetMapping("/getAllSections")
 	public String getAllProducts() {
 		return sectionService.getAllSections().toString();
 	}
 
+	@HasAdminRole
 	@DeleteMapping("/{sectionId}")
 	public String deleteProduct(@PathVariable int sectionId) {
 		if (sectionService.deleteSection(sectionId))
@@ -33,6 +38,7 @@ public class SectionController {
 		return "Section couldn't be deleted!";
 	}
 
+	@HasAdminRole
 	@PostMapping
 	public String addSection(@RequestBody Section section) {
 		if (sectionService.addSection(section))
@@ -40,6 +46,8 @@ public class SectionController {
 		return "Section couldn't be added";
 	}
 
+	@HasUserRole
+	@HasAdminRole
 	@GetMapping("/{id}")
 	public String getAllProducts(@PathVariable int id) {
 		return sectionService.getSectionById(id).toString();
