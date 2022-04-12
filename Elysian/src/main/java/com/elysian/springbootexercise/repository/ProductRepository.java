@@ -1,8 +1,10 @@
 package com.elysian.springbootexercise.repository;
 
-import com.elysian.springbootexercise.database.DataInitialization;
+import com.elysian.springbootexercise.database.InitProducts;
+import com.elysian.springbootexercise.database.InitSections;
 import com.elysian.springbootexercise.model.Product;
 import com.elysian.springbootexercise.model.Section;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -11,8 +13,13 @@ import java.util.List;
 @Repository
 public class ProductRepository {
 
-	private final List<Product> products = new ArrayList<>(DataInitialization.getProducts());
-	private final List<Section> sections = new ArrayList<>(DataInitialization.getSections());
+	private final List<Product> products = new ArrayList<>(InitProducts.getProducts());
+	private final List<Section> sections = new ArrayList<>(InitSections.getSections());
+
+	@Autowired
+	public ProductRepository() {
+
+	}
 
 	public List<Product> getAllProducts() {
 		return products;

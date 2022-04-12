@@ -1,21 +1,17 @@
 package com.elysian.springbootexercise.database;
 
 import com.elysian.springbootexercise.model.Product;
-import com.elysian.springbootexercise.model.Section;
-import com.elysian.springbootexercise.model.Store;
 
 import java.util.HashSet;
 import java.util.Set;
 
-public final class DataInitialization {
+public final class InitProducts {
 
 	private static final Set<Product> products;
 	private static final Set<Product> gloves;
 	private static final Set<Product> helmets;
 	private static final Set<Product> trousers;
 	private static final Set<Product> boots;
-	private static final Set<Section> sections;
-	private static final Set<Store> stores;
 
 	static {
 		products = setUpProducts();
@@ -23,33 +19,6 @@ public final class DataInitialization {
 		helmets = setUpHelmets();
 		trousers = setUpTrousers();
 		boots = setUpBoots();
-		sections = setUpSections();
-		stores = setUpStores();
-	}
-
-	// ######################### STORE ########################
-	private static Set<Store> setUpStores() {
-		Set<Store> stores = new HashSet<>();
-		stores.add(new Store(1, "MotoShop", "Arad", getSections()));
-		return stores;
-	}
-
-	public static Set<Store> getStores() {
-		return stores;
-	}
-
-	// ######################### SECTIONS ########################
-	private static Set<Section> setUpSections() {
-		Set<Section> sections = new HashSet<>();
-		sections.add(new Section(1, "Casti", getHelmets()));
-		sections.add(new Section(2, "Manusi", getGloves()));
-		sections.add(new Section(3, "Pantaloni", getTrousers()));
-		sections.add(new Section(4, "Bocanci", getBoots()));
-		return sections;
-	}
-
-	public static Set<Section> getSections() {
-		return sections;
 	}
 
 	// ######################### PRODUCTS ########################
@@ -71,6 +40,10 @@ public final class DataInitialization {
 		products.add(new Product(11, "Bocanc2", 200));
 		products.add(new Product(12, "Bocanc3", 300));
 
+		return products;
+	}
+
+	public static Set<Product> getProducts() {
 		return products;
 	}
 
@@ -122,8 +95,5 @@ public final class DataInitialization {
 		return boots;
 	}
 
-	public static Set<Product> getProducts() {
-		return products;
-	}
 
 }

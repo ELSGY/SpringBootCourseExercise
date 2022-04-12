@@ -17,7 +17,7 @@ public class ProductController {
 	}
 
 	@GetMapping("/getAllProducts")
-	public Iterable<Product> getAllProducts(){
-		return productService.getAllProducts();
+	public String getAllProducts() {
+		return productService.getAllProducts().toString();
 	}
 }
