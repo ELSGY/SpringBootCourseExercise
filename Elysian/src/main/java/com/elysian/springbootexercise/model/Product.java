@@ -20,12 +20,11 @@ public class Product extends AbstractEntity {
 	@Setter
 	private double price;
 
-	@Getter
-	@Setter
-	@ExcludeFieldFromJson //maybe added, maybe not while creating a Product object
-	private Section section;
-
 	public Product() {
+	}
+
+	public Product(String name) {
+		this.name = name;
 	}
 
 	public Product(final int id, final String name, final double price) {
@@ -38,7 +37,6 @@ public class Product extends AbstractEntity {
 		this.id = id;
 		this.name = name;
 		this.price = price;
-		this.section = section;
 	}
 
 	@Override
@@ -49,13 +47,12 @@ public class Product extends AbstractEntity {
 			return false;
 		return id == product.id &&
 			   Objects.equals(name, product.name) &&
-			   Objects.equals(price, product.price) &&
-			   Objects.equals(section, product.section);
+			   Objects.equals(price, product.price);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, name, price, section);
+		return Objects.hash(id, name, price);
 	}
 
 	@Override

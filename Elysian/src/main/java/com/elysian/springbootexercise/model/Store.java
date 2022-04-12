@@ -40,7 +40,7 @@ public class Store extends AbstractEntity {
 		this.id = id;
 		this.name = name;
 		this.location = location;
-		this.sections.addAll(sections);
+		this.sections = sections;
 	}
 
 	@Override

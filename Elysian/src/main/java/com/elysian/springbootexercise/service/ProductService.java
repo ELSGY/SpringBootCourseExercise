@@ -25,10 +25,6 @@ public class ProductService {
 		return productRepository.getAllProducts();
 	}
 
-	public boolean addSectionToProduct(int sectionId, Product product) {
-		return productRepository.addSectionToProduct(sectionId, product);
-	}
-
 	public boolean addProduct(Product product) {
 		return productRepository.addProduct(product);
 	}

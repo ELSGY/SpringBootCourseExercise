@@ -54,19 +54,4 @@ public class ProductRepository {
 		}
 	}
 
-	public boolean addSectionToProduct(int sectionId, Product product) {
-		try {
-			products.get((int) product.getId()).setSection(sections.get(sectionId));
-			sections.forEach(section -> section.getProducts().forEach(prod -> {
-				if (prod.equals(product)) {
-					prod.setSection(sections.get(sectionId));
-				}
-			}));
-			return true;
-		} catch (Exception e) {
-			// logging
-			return false;
-		}
-	}
-
 }

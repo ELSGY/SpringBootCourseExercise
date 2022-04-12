@@ -20,11 +20,6 @@ public class Section extends AbstractEntity {
 	@Getter
 	@Setter
 	@ExcludeFieldFromJson // maybe added, maybe not while creating a Section object
-	private Store store;
-
-	@Getter
-	@Setter
-	@ExcludeFieldFromJson // maybe added, maybe not while creating a Section object
 	private Set<Product> products;
 
 	public Section() {
