@@ -1,19 +1,9 @@
 package com.elysian.springbootexercise.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.elysian.springbootexercise.utils.annotations.ExcludeFieldFromJson;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
-import javax.persistence.SequenceGenerator;
 import java.util.Objects;
 import java.util.Set;
 
@@ -21,36 +11,24 @@ public class Section extends AbstractEntity {
 
 	@Getter
 	@Setter
-	@Id
-	@Column(name = "id")
-	@GeneratedValue(generator = "section_sequence_generator")
-	@SequenceGenerator(name = "section_sequence_generator", sequenceName = "section_sequence", allocationSize = 1)
 	private int id;
 
 	@Getter
 	@Setter
-	@Column(name = "name", length = 40)
 	private String name;
 
 	@Getter
 	@Setter
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "storeId")
-	@JsonIgnore
+	@ExcludeFieldFromJson // maybe added, maybe not while creating a Section object
 	private Store store;
 
 	@Getter
 	@Setter
-	@OneToMany(mappedBy = "section", cascade = CascadeType.ALL, orphanRemoval = true)
-	@OrderBy(value = "name")
+	@ExcludeFieldFromJson // maybe added, maybe not while creating a Section object
 	private Set<Product> products;
 
 	public Section() {
 
-	}
-
-	public Section(final String name) {
-		this.name = name;
 	}
 
 	public Section(final int id, final String name) {
@@ -58,9 +36,10 @@ public class Section extends AbstractEntity {
 		this.name = name;
 	}
 
-	public Section(final String name, final Set<Product> products) {
+	public Section(final int id, final String name, final Set<Product> products) {
+		this.id = id;
 		this.name = name;
-		this.products.addAll(products);
+		this.products = products;
 	}
 
 	@Override
@@ -76,5 +55,10 @@ public class Section extends AbstractEntity {
 	@Override
 	public int hashCode() {
 		return Objects.hash(id, name);
+	}
+
+	@Override
+	public String toString() {
+		return id + ", " + name;
 	}
 }

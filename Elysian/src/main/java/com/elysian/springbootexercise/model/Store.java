@@ -1,15 +1,9 @@
 package com.elysian.springbootexercise.model;
 
+import com.elysian.springbootexercise.utils.annotations.ExcludeFieldFromJson;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 import java.util.Objects;
 import java.util.Set;
 
@@ -17,42 +11,35 @@ public class Store extends AbstractEntity {
 
 	@Getter
 	@Setter
-	@Id
-	@Column(name = "id")
-	@GeneratedValue(generator = "store_sequence_generator")
-	@SequenceGenerator(name = "store_sequence_generator", sequenceName = "store_sequence", allocationSize = 1)
 	private int id;
 
 	@Getter
 	@Setter
-	@Column(nullable = false, length = 50, insertable = true)
 	private String name;
 
 	@Getter
 	@Setter
-	@Column(nullable = false, length = 50, insertable = true)
 	private String location;
 
 	@Getter
 	@Setter
-	@OneToMany(mappedBy = "store", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ExcludeFieldFromJson // maybe added, maybe not while creating a Store object
 	private Set<Section> sections;
 
 	public Store() {
 
 	}
 
-	public Store(final String name) {
-		this.name = name;
-	}
-
-	public Store(final String name, String location) {
+	public Store(final int id, final String name, String location) {
+		this.id = id;
 		this.name = name;
 		this.location = location;
 	}
 
-	public Store(final String name, Set<Section> sections) {
+	public Store(final int id, final String name, String location, Set<Section> sections) {
+		this.id = id;
 		this.name = name;
+		this.location = location;
 		this.sections.addAll(sections);
 	}
 

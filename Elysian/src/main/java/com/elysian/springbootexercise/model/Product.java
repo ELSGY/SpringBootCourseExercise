@@ -1,66 +1,44 @@
 package com.elysian.springbootexercise.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.elysian.springbootexercise.utils.annotations.ExcludeFieldFromJson;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
 import java.util.Objects;
 
 public class Product extends AbstractEntity {
 
 	@Getter
 	@Setter
-	@Id
-	@Column(name = "id")
-	@GeneratedValue(generator = "product_sequence_generator")
-	@SequenceGenerator(name = "product_sequence_generator", sequenceName = "product_sequence", allocationSize = 1)
 	private long id;
 
 	@Getter
 	@Setter
-	@Column(name = "name", unique = true, nullable = false, insertable = true, updatable = false, length = 50)
 	private String name;
 
 	@Getter
 	@Setter
-	@Column(name = "price", unique = false, nullable = false, insertable = true, updatable = true, length = 10)
 	private double price;
 
 	@Getter
 	@Setter
-	@ManyToOne(targetEntity = Section.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "sectionId")
-	@JsonIgnore
+	@ExcludeFieldFromJson //maybe added, maybe not while creating a Product object
 	private Section section;
 
 	public Product() {
 	}
 
-	public Product(final String name) {
-		this.name = name;
-	}
-
-	public Product(final int id, final String name) {
+	public Product(final int id, final String name, final double price) {
 		this.id = id;
 		this.name = name;
+		this.price = price;
 	}
 
-	public Product(final String name, final Section section) {
-		this.name = name;
-		this.section = section;
-	}
-
-	public Product(final String name, final double price) {
+	public Product(final int id, final String name, final double price, final Section section) {
+		this.id = id;
 		this.name = name;
 		this.price = price;
+		this.section = section;
 	}
 
 	@Override
@@ -82,6 +60,6 @@ public class Product extends AbstractEntity {
 
 	@Override
 	public String toString() {
-		return id + ", " + name + " [" + price + "]";
+		return "\n" + id + ", " + name + " [" + price + "]";
 	}
 }
